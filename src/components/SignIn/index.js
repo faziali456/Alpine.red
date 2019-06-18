@@ -84,7 +84,6 @@ class SignInFormBase extends Component {
           />
           <span className="field_span font-Bitter">Password</span>
         </label>
-        <PasswordForgetLink />
         <button disabled={isInvalid} type="submit" className="btn waves-effect waves-light singup_button_custome font-Bitter">
           Sign In
         </button>
