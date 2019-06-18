@@ -1,11 +1,3 @@
-# react-firebase-authentication
-
-[![Build Status](https://travis-ci.org/taming-the-state-in-react/react-firebase-authentication.svg?branch=master)](https://travis-ci.org/taming-the-state-in-react/react-firebase-authentication) [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/taming-the-state-in-react/react-firebase-authentication.svg)](https://greenkeeper.io/)
-
-* Found in [Taming the State in React](https://roadtoreact.com/course-details?courseId=TAMING_THE_STATE)
-* [Live](https://react-firebase-authentication.wieruch.com/)
-* [Tutorial](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
-
 ## Features
 
 * uses:
@@ -27,15 +19,14 @@
 
 ## Installation
 
-* `git clone git@github.com:taming-the-state-in-react/react-firebase-authentication.git`
-* `cd react-firebase-authentication`
+* `git clone https://github.com/faziali456/Alpine.red.git`
+* `cd <folder>`
 * `npm install`
 * `npm start`
 * visit http://localhost:3000/
-* Use your own Firebase Credentials
+* Use your credentials to signIn
 
 ### Use your own Firebase Credentials
 
-* visit https://firebase.google.com/ and create a Firebase App
-* copy and paste your Credentials from your Firebase App into src/firebase/firebase.js
-* activate Email/Password Sign-In Method in your Firebase App
+* username: mia@gmail.com
+* password: 123456
