@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   lastName: '',
   passwordOne: '',
   passwordTwo: '',
-  isAdmin: false,
+  isAdmin: true,
   error: null,
 };
 

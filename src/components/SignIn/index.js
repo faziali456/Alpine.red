@@ -244,18 +244,28 @@ class SignInTwitterBase extends Component {
 class SignInTwitterGoogleFBBase extends Component {
   constructor(props) {
     super(props);
-    this.state = { error: null };
+    this.state = { error: null };    
   }
   submittTwitter = () => {
     this.props.firebase
       .doSignInWithTwitter()
       .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
+        // Create a user in your Firebase Realtime Database too    
+        console.log(socialAuthUser.additionalUserInfo.profile.email);
+        
         this.props.firebase
           .user(socialAuthUser.user.uid)
           .set({
-            username: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email,
+            username: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.uid,
+            photoUrl: socialAuthUser.user.photoURL,
+            phoneNo: '',
+            lastName: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            alpineActivities: '',
+            bio: '',
             roles: [],
           })
           .then(() => {
@@ -271,16 +281,25 @@ class SignInTwitterGoogleFBBase extends Component {
       });
   }
   submittFB = () => {
+    
     this.props.firebase
       .doSignInWithFacebook()
       .then(socialAuthUser => {
         // Create a user in your Firebase Realtime Database too
-        this.props.firebase
+       this.props.firebase
           .user(socialAuthUser.user.uid)
           .set({
             username: socialAuthUser.additionalUserInfo.profile.name,
             email: socialAuthUser.additionalUserInfo.profile.email,
-            roles: [],
+            photoUrl: socialAuthUser.additionalUserInfo.profile.picture.data.url,
+            phoneNo: '',
+            lastName: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            alpineActivities: '',
+            bio: '',
+            roles: [], 
           })
           .then(() => {
             this.setState({ error: null });
@@ -304,6 +323,14 @@ class SignInTwitterGoogleFBBase extends Component {
           .set({
             username: socialAuthUser.user.displayName,
             email: socialAuthUser.user.email,
+            photoUrl: socialAuthUser.user.photoURL,
+            phoneNo: '',
+            lastName: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            alpineActivities: '',
+            bio: '',
             roles: [],
           })
           .then(() => {
@@ -322,11 +349,11 @@ class SignInTwitterGoogleFBBase extends Component {
     const { error } = this.state;
     return (
       <div>
-        <div class="w-50 social py-4">
-				<div class="social_links justify-content-around d-flex">
-					<i class="fab fa-facebook-square" onClick={this.submittFB} style={signInBtnDesign}></i>
-					<i class="fab fa-google-plus-square" onClick={this.submittGoogle} style={signInBtnDesign}></i>
-					<i class="fab fa-twitter-square" onClick={this.submittTwitter} ></i>
+        <div className="w-50 social py-4">
+				<div className="social_links justify-content-around d-flex">
+					<i className="fab fa-facebook-square" onClick={this.submittFB} style={signInBtnDesign}></i>
+					<i className="fab fa-google-plus-square" onClick={this.submittGoogle} style={signInBtnDesign}></i>
+					<i className="fab fa-twitter-square" onClick={this.submittTwitter} ></i>
 				</div>
 			</div>
         {error && <p>{error.message}</p>}

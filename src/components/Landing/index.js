@@ -3,7 +3,7 @@ let imgUrl = '/asset/images/BgImage.jpg'
 let styles = {
         backgroundImage: `url(${ imgUrl })`,
         backgroundRepeat  : 'no-repeat',
-        backgroundPosition: 'left no-repeat;',
+        backgroundPosition: 'left no-repeat',
         backgroundSize: 'cover',
         padding: '327px'
   }
