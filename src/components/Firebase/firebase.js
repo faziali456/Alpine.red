@@ -1,6 +1,8 @@
 import app from 'firebase/app';
+import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 
 const config = {
   apiKey: "AIzaSyASv7v34RkDXzgcUX1i3TAI1OTOSnmifVo",
@@ -18,7 +20,7 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
-
+    this.store = app.storage();
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
@@ -81,6 +83,8 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
 
   users = () => this.db.ref('users');
+
+  image = () => this.store.ref('Images'); 
 }
 
 export default Firebase;

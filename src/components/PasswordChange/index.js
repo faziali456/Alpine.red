@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { AuthUserContext, withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
-
+import * as ROUTES from '../../constants/routes';
+//Init State
 const INITIAL_STATE = {
-  passwordOne: '',
-  passwordTwo: '',
   username: '',
   phoneNo: '',
   lastName: '',
@@ -18,80 +17,112 @@ const INITIAL_STATE = {
 };
 
 class PasswordChangeForm extends Component {
+  //Init State with user profile
   constructor(props) {
     super(props);
-    this.state = { 
-      ...INITIAL_STATE
+    
+    this.state ={
+      INITIAL_STATE
     }
-     this.props.firebase
-     .user(this.props.uid).on('value', snapshot => {
-      const Object = snapshot.val();
-      
-      if (Object) {
-        this.setState({
-          username: Object.username.val,
-          phoneNo: Object.phoneNo.val,
-          lastName: Object.lastName.val,
-          city: Object.city.val,
-          state: Object.state.val,
-          zipCode: Object.zipCode.val,
-          alpineActivities: Object.alpineActivities.val,
-          bio: Object.bio.val,        });        
-  
-      } else {
-      }
+    this.FileList=null;
+    this.getSetData();
+  }
+
+  //Init Field
+  getSetData = () => {
+    this.props.firebase
+     .user(this.props.uid).once('value', snapshot => {
+      const state = snapshot.val();
+      if(state){
+        this.setState(state);  
+      }      
     });
   }
 
+  //submit Handler
   onSubmit = event => {
-    const { passwordOne,username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio, } = this.state;
     
-    this.props.firebase
-      .doPasswordUpdate(passwordOne)
-      .then(() => {
-        this.props.firebase
-          .user(this.props.uid)
-          .set({
-            username,
-            phoneNo,
-            lastName,          
-            city,
-            state,
-            zipCode,
-            alpineActivities,
-            bio,
-          })
-          .then(() => {
-            this.setState({ 
-              ...INITIAL_STATE, });
-            
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
-        
-      })
-      .catch(error => {
-        this.setState({ error });
+    const uploadTask = this.props.firebase.image().child(this.FileList[0].name).put(this.FileList[0]);
+    
+    uploadTask
+    .then(uploadTaskSnapshot => {
+        return uploadTaskSnapshot.ref.getDownloadURL();
+    })
+    .then(photoUrl  => {
+      this.setState({
+        photoUrl
       });
 
+      this.updateProfile();        
+    }).then(() => {
+      // this.setState({ 
+      //   ...INITIAL_STATE, });
+      alert('Profile Updated');
+       
+    })
+    .catch(error => {
+      this.setState({ error });
+    });
     event.preventDefault();
   };
 
+  //change listener on every fields 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  render() {
-    const { passwordOne, passwordTwo,username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio,photoUrl, error } = this.state;
+  handleChange = SelectorFiles =>
+  { 
+    if(SelectorFiles){
+      this.FileList=SelectorFiles;
+      this.setState({
+        photoUrl: URL.createObjectURL(this.FileList[0])
+      });
+      console.log(URL.createObjectURL(this.FileList[0]));
+    }
+  };
 
+  updateProfile = () => {
+    const { username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio,photoUrl } = this.state;
+    this.props.firebase
+            .user(this.props.uid)
+            .set({
+              username,
+              phoneNo,
+              lastName,          
+              city,
+              state,
+              zipCode,
+              alpineActivities,
+              bio,
+              photoUrl
+            })
+    
+  } 
+
+  //Mian 
+  render() {
+    const { username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio,photoUrl, error, isUploading,progress } = this.state;
+    
     const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+      phoneNo === '' || username === '';
     return (
       <div className="container justify-content-center d-flex">
         <div className="signup_form border p-3 mt-5">
-          <h4 className="t_center signup_h4">Update Profile</h4>          
+          <h4 className="t_center" style={{ color: '#16ABE4'}}>Update Profile</h4> 
+          <div style={{textAlign: 'center'}}>
+          <img src={photoUrl} alt="Logo" width="150px"/>
+          </div>
           <form onSubmit={this.onSubmit}>
+          <div class="file-field input-field">
+            <div class="btn blue darken-1">
+              <span>Change Profile Picture</span>
+              <input type="file" onChange={ (e) => this.handleChange(e.target.files) } />
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" />
+            </div>
+          </div>
             <label className="custom_input_label pure-material-textfield-outlined">
               <input 
                 name="username"
@@ -119,7 +150,7 @@ class PasswordChangeForm extends Component {
                 name="phoneNo"
                 value={phoneNo}
                 onChange={this.onChange}
-                type="text" 
+                type="Number" 
                 placeholder=""
                 className="custom_input_field pure-material-textfield-outlined" 
                 />
@@ -168,7 +199,7 @@ class PasswordChangeForm extends Component {
                 className="custom_input_field pure-material-textfield-outlined"
               />
               <span className="field_span font-Bitter">Interesting Alpine Activities</span>
-            </label>
+            </label>                       
             <label className="custom_input_label pure-material-textfield-outlined">
               <input
                 name="bio"
@@ -180,29 +211,7 @@ class PasswordChangeForm extends Component {
               />
               <span className="field_span font-Bitter">Bio</span>
             </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-            <input
-              name="passwordOne"
-              value={passwordOne}
-              onChange={this.onChange}
-              type="password"
-              placeholder=""
-              className="custom_input_field pure-material-textfield-outlined" 
-            />
-              <span className="field_span">New Password</span>
-            </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-            <input
-              name="passwordTwo"
-              value={passwordTwo}
-              onChange={this.onChange}
-              type="password"
-              placeholder=""
-              className="custom_input_field pure-material-textfield-outlined" 
-            />
-              <span className="field_span">Confirm Password</span>
-            </label>
-            <button type="submit" className="btn btn-block btn-primary"  disabled={isInvalid}>Update</button>
+            <button type="submit" className="btn btn-block blue darken-1"  disabled={isInvalid}>Update</button>
             {error && <p>{error.message}</p>}
           </form>			
         </div>

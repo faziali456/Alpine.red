@@ -250,31 +250,36 @@ class SignInTwitterGoogleFBBase extends Component {
     this.props.firebase
       .doSignInWithTwitter()
       .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too    
-        console.log(socialAuthUser.additionalUserInfo.profile.email);
-        
+        this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
+          if (snapshot.exists()) {
+            console.log('User Exist');
+          }
+          else{
+            // Create a user in your Firebase Realtime Database too            
         this.props.firebase
-          .user(socialAuthUser.user.uid)
-          .set({
-            username: socialAuthUser.user.displayName,
-            email: socialAuthUser.user.uid,
-            photoUrl: socialAuthUser.user.photoURL,
-            phoneNo: '',
-            lastName: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            alpineActivities: '',
-            bio: '',
-            roles: [],
-          })
-          .then(() => {
-            this.setState({ error: null });
-            this.props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
+        .user(socialAuthUser.user.uid)
+        .set({
+          username: socialAuthUser.user.displayName,
+          email: socialAuthUser.user.uid,
+          photoUrl: socialAuthUser.user.photoURL,
+          phoneNo: '',
+          lastName: '',
+          city: '',
+          state: '',
+          zipCode: '',
+          alpineActivities: '',
+          bio: '',
+          roles: [],
+        })
+        .then(() => {
+          this.setState({ error: null });
+          this.props.history.push(ROUTES.HOME);
+        })
+        .catch(error => {
+          this.setState({ error });
+        });
+          }
+        })
       })
       .catch(error => {
         this.setState({ error });
@@ -285,61 +290,76 @@ class SignInTwitterGoogleFBBase extends Component {
     this.props.firebase
       .doSignInWithFacebook()
       .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-       this.props.firebase
-          .user(socialAuthUser.user.uid)
-          .set({
-            username: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email,
-            photoUrl: socialAuthUser.additionalUserInfo.profile.picture.data.url,
-            phoneNo: '',
-            lastName: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            alpineActivities: '',
-            bio: '',
-            roles: [], 
-          })
-          .then(() => {
-            this.setState({ error: null });
-            this.props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
+        this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
+          if (snapshot.exists()) {
+            console.log('User Exist');
+          }
+          else{
+            // Create a user in your Firebase Realtime Database too
+            this.props.firebase
+            .user(socialAuthUser.user.uid)
+            .set({
+              username: socialAuthUser.additionalUserInfo.profile.name,
+              email: socialAuthUser.additionalUserInfo.profile.email,
+              photoUrl: socialAuthUser.additionalUserInfo.profile.picture.data.url,
+              phoneNo: '',
+              lastName: '',
+              city: '',
+              state: '',
+              zipCode: '',
+              alpineActivities: '',
+              bio: '',
+              roles: [], 
+            })
+            .then(() => {
+              this.setState({ error: null });
+              this.props.history.push(ROUTES.HOME);
+            })
+            .catch(error => {
+              this.setState({ error });
+            });
+          }
+        })
       })
       .catch(error => {
         this.setState({ error });
       });
   }
   submittGoogle = () => {
+    
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        this.props.firebase
-          .user(socialAuthUser.user.uid)
-          .set({
-            username: socialAuthUser.user.displayName,
-            email: socialAuthUser.user.email,
-            photoUrl: socialAuthUser.user.photoURL,
-            phoneNo: '',
-            lastName: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            alpineActivities: '',
-            bio: '',
-            roles: [],
-          })
-          .then(() => {
-            this.setState({ error: null });
-            this.props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
+        this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
+          if (snapshot.exists()) {
+            console.log('User Exist');
+          }
+          else{
+            // Create a user in your Firebase Realtime Database too
+            this.props.firebase
+            .user(socialAuthUser.user.uid)
+            .set({
+              username: socialAuthUser.user.displayName,
+              email: socialAuthUser.user.email,
+              photoUrl: socialAuthUser.user.photoURL,
+              phoneNo: '',
+              lastName: '',
+              city: '',
+              state: '',
+              zipCode: '',
+              alpineActivities: '',
+              bio: '',
+              roles: [],
+            })
+            .then(() => {
+              this.setState({ error: null });
+              this.props.history.push(ROUTES.HOME);
+            })
+            .catch(error => {
+              this.setState({ error });
+            });
+          }
+        })        
       })
       .catch(error => {
         this.setState({ error });
