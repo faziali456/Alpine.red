@@ -58,7 +58,7 @@ class Firebase {
           .once('value')
           .then(snapshot => {
             const dbUser = snapshot.val();
-
+            
             // default empty roles
             if (!dbUser.roles) {
               dbUser.roles = [];
@@ -80,7 +80,7 @@ class Firebase {
 
   // *** User API ***
 
-  user = uid => this.db.ref(`users/${uid}`);
+  user = uid => this.db.ref('users/'+uid);
 
   users = () => this.db.ref('users');
 

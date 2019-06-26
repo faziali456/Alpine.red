@@ -241,22 +241,34 @@ class SignInTwitterBase extends Component {
     );
   }
 }
+
 class SignInTwitterGoogleFBBase extends Component {
   constructor(props) {
     super(props);
-    this.state = { error: null };    
+    this.state = { error: null};
+    this.addUser = this.addUser.bind(this);
   }
-  submittTwitter = () => {
-    this.props.firebase
-      .doSignInWithTwitter()
-      .then(socialAuthUser => {
-        this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
-          if (snapshot.exists()) {
-            console.log('User Exist');
-          }
-          else{
-            // Create a user in your Firebase Realtime Database too            
-        this.props.firebase
+  
+  checkUserExist = (socialAuthUser,provider) =>{
+    this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
+      if(snapshot.val() !== null){
+        console.log(socialAuthUser.user.uid + "----------------User Exist------------------------");
+        this.setState({ error: null });
+        this.props.history.push(ROUTES.HOME);
+      }else{
+        try {
+          this.addUser(socialAuthUser,provider);  
+        } catch (err) {
+          console.log(err)
+        }
+        
+      }
+    }.bind(this));
+  } 
+  addUser = (socialAuthUser, provider) => {
+    console.log(socialAuthUser.user.uid + "----------------User Not Exist------------------------");
+    if(provider===1){
+      this.props.firebase
         .user(socialAuthUser.user.uid)
         .set({
           username: socialAuthUser.user.displayName,
@@ -278,65 +290,32 @@ class SignInTwitterGoogleFBBase extends Component {
         .catch(error => {
           this.setState({ error });
         });
-          }
-        })
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-  }
-  submittFB = () => {
-    
-    this.props.firebase
-      .doSignInWithFacebook()
-      .then(socialAuthUser => {
-        this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
-          if (snapshot.exists()) {
-            console.log('User Exist');
-          }
-          else{
-            // Create a user in your Firebase Realtime Database too
-            this.props.firebase
-            .user(socialAuthUser.user.uid)
-            .set({
-              username: socialAuthUser.additionalUserInfo.profile.name,
-              email: socialAuthUser.additionalUserInfo.profile.email,
-              photoUrl: socialAuthUser.additionalUserInfo.profile.picture.data.url,
-              phoneNo: '',
-              lastName: '',
-              city: '',
-              state: '',
-              zipCode: '',
-              alpineActivities: '',
-              bio: '',
-              roles: [], 
-            })
-            .then(() => {
-              this.setState({ error: null });
-              this.props.history.push(ROUTES.HOME);
-            })
-            .catch(error => {
-              this.setState({ error });
-            });
-          }
-        })
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-  }
-  submittGoogle = () => {
-    
-    this.props.firebase
-      .doSignInWithGoogle()
-      .then(socialAuthUser => {
-        this.props.firebase.user(socialAuthUser.user.uid).once('value', function(snapshot) {
-          if (snapshot.exists()) {
-            console.log('User Exist');
-          }
-          else{
-            // Create a user in your Firebase Realtime Database too
-            this.props.firebase
+    }
+    else if(provider===2){
+      this.props.firebase
+          .user(socialAuthUser.user.uid)
+          .set({
+            username: socialAuthUser.additionalUserInfo.profile.name,
+            email: socialAuthUser.additionalUserInfo.profile.email,
+            photoUrl: socialAuthUser.additionalUserInfo.profile.picture.data.url,
+            phoneNo: '',
+            lastName: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            alpineActivities: '',
+            bio: '',
+            roles: [], 
+          })          
+        .then(() => {
+        this.setState({ error: null });
+        this.props.history.push(ROUTES.HOME);
+        }).catch(error => {
+            console.log("User Creation Eror "+error);           
+          });
+    }
+    else if(provider===3){
+      this.props.firebase
             .user(socialAuthUser.user.uid)
             .set({
               username: socialAuthUser.user.displayName,
@@ -351,15 +330,42 @@ class SignInTwitterGoogleFBBase extends Component {
               bio: '',
               roles: [],
             })
-            .then(() => {
-              this.setState({ error: null });
-              this.props.history.push(ROUTES.HOME);
-            })
+          .then(() => {
+            this.setState({ error: null });
+            this.props.history.push(ROUTES.HOME);
+          })
             .catch(error => {
               this.setState({ error });
             });
-          }
-        })        
+    }
+    
+  }
+  submittTwitter = () => {
+    this.props.firebase
+      .doSignInWithTwitter()
+      .then(socialAuthUser => {
+        this.checkUserExist(socialAuthUser,1);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  }
+  submittFB = () => {
+    this.props.firebase
+      .doSignInWithFacebook()
+      .then(socialAuthUser => {
+        this.checkUserExist(socialAuthUser,2);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  }
+  submittGoogle = () => {
+    
+    this.props.firebase
+      .doSignInWithGoogle()
+      .then(socialAuthUser => {
+        this.checkUserExist(socialAuthUser,3);  
       })
       .catch(error => {
         this.setState({ error });
