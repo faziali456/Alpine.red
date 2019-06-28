@@ -264,7 +264,8 @@ class SignInTwitterGoogleFBBase extends Component {
         
       }
     }.bind(this));
-  } 
+  }
+
   addUser = (socialAuthUser, provider) => {
     console.log(socialAuthUser.user.uid + "----------------User Not Exist------------------------");
     if(provider===1){
@@ -286,6 +287,7 @@ class SignInTwitterGoogleFBBase extends Component {
         .then(() => {
           this.setState({ error: null });
           this.props.history.push(ROUTES.HOME);
+          window.location.reload();
         })
         .catch(error => {
           this.setState({ error });
@@ -310,37 +312,39 @@ class SignInTwitterGoogleFBBase extends Component {
         .then(() => {
         this.setState({ error: null });
         this.props.history.push(ROUTES.HOME);
+        window.location.reload();
         }).catch(error => {
             console.log("User Creation Eror "+error);           
           });
     }
     else if(provider===3){
       this.props.firebase
-            .user(socialAuthUser.user.uid)
-            .set({
-              username: socialAuthUser.user.displayName,
-              email: socialAuthUser.user.email,
-              photoUrl: socialAuthUser.user.photoURL,
-              phoneNo: '',
-              lastName: '',
-              city: '',
-              state: '',
-              zipCode: '',
-              alpineActivities: '',
-              bio: '',
-              roles: [],
-            })
+          .user(socialAuthUser.user.uid)
+          .set({
+            username: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.email,
+            photoUrl: socialAuthUser.user.photoURL,
+            phoneNo: '',
+            lastName: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            alpineActivities: '',
+            bio: '',
+            roles: [],
+          })
           .then(() => {
             this.setState({ error: null });
             this.props.history.push(ROUTES.HOME);
+            window.location.reload();
           })
-            .catch(error => {
-              this.setState({ error });
-            });
-    }
-    
+          .catch(error => {
+            this.setState({ error });
+          });
+    }  
   }
-  submittTwitter = () => {
+
+  submittTwitter = event => {
     this.props.firebase
       .doSignInWithTwitter()
       .then(socialAuthUser => {
@@ -349,8 +353,10 @@ class SignInTwitterGoogleFBBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
+      event.preventDefault();
   }
-  submittFB = () => {
+
+  submittFB = event => {
     this.props.firebase
       .doSignInWithFacebook()
       .then(socialAuthUser => {
@@ -359,8 +365,10 @@ class SignInTwitterGoogleFBBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
+      event.preventDefault();
   }
-  submittGoogle = () => {
+
+  submittGoogle = event => {
     
     this.props.firebase
       .doSignInWithGoogle()
@@ -370,7 +378,9 @@ class SignInTwitterGoogleFBBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
+      event.preventDefault();
   }
+
   render() {
     const { error } = this.state;
     return (

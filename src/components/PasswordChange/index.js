@@ -14,6 +14,8 @@ const INITIAL_STATE = {
   bio: '',
   photoUrl: '',
   error: null,
+  isInvalid: true,
+  loading: false
 };
 
 class PasswordChangeForm extends Component {
@@ -44,6 +46,8 @@ class PasswordChangeForm extends Component {
     
     const uploadTask = this.props.firebase.image().child(this.FileList[0].name).put(this.FileList[0]);
     
+    this.setState({ isInvalid: true });
+    
     uploadTask
     .then(uploadTaskSnapshot => {
         return uploadTaskSnapshot.ref.getDownloadURL();
@@ -58,7 +62,7 @@ class PasswordChangeForm extends Component {
       // this.setState({ 
       //   ...INITIAL_STATE, });
       alert('Profile Updated');
-       
+      this.setState({ isInvalid: false });
     })
     .catch(error => {
       this.setState({ error });
@@ -103,9 +107,12 @@ class PasswordChangeForm extends Component {
   //Mian 
   render() {
     const { username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio,photoUrl, error, isUploading,progress } = this.state;
+    if(this.state.isInvalid) { // if your component doesn't have to wait for an async action, remove this block 
+      return (
+        <div style={{textAlign:"center"}}><img src="/asset/images/Loading.gif" width="140px" style={{paddingTop:"180px"}}/></div>
+      ); // render null when app is not ready
+    }
     
-    const isInvalid =
-      phoneNo === '' || username === '';
     return (
       <div className="container justify-content-center d-flex">
         <div className="signup_form border p-3 mt-5">
@@ -211,7 +218,7 @@ class PasswordChangeForm extends Component {
               />
               <span className="field_span font-Bitter">Bio</span>
             </label>
-            <button type="submit" className="btn btn-block blue darken-1"  disabled={isInvalid}>Update</button>
+            <button type="submit" className="btn btn-block blue darken-1"  disabled={this.state.isInvalid}> Update Profile</button>
             {error && <p>{error.message}</p>}
           </form>			
         </div>
