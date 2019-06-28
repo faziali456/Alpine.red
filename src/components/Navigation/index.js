@@ -23,7 +23,7 @@ const Navigation = () => (
 const NavigationAuth = ({ authUser }) => (
   <nav className="nav-wrapper blue darken-2">
     <div className="container">
-        <div className="brand-logo">Alpine.<span style={{color: 'red'}}>Red</span></div>
+        <div className="brand-logo">Alpine.<span style={{color: 'red'}}>red</span></div>
         <ul className="right hide-on-med-and-down">
       <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
@@ -51,7 +51,7 @@ const NavigationAuth = ({ authUser }) => (
 const NavigationNonAuth = () => (
   <nav className="nav-wrapper blue darken-2">
     <div className="container">
-        <div className="brand-logo">Alpine.<span style={{color: 'red'}}>Red</span></div>
+        <div className="brand-logo">Alpine.<span style={{color: 'red'}}>red</span></div>
         <SignOutLinks></SignOutLinks>
     </div>
   </nav>

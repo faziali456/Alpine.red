@@ -6,7 +6,6 @@ import * as ROUTES from '../../constants/routes';
 const INITIAL_STATE = {
   username: '',
   phoneNo: '',
-  lastName: '',
   city: '',
   state: '',
   zipCode: '',
@@ -87,13 +86,12 @@ class PasswordChangeForm extends Component {
   };
 
   updateProfile = () => {
-    const { username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio,photoUrl } = this.state;
+    const { username, phoneNo, city, state, zipCode, alpineActivities, bio,photoUrl } = this.state;
     this.props.firebase
             .user(this.props.uid)
             .set({
               username,
               phoneNo,
-              lastName,          
               city,
               state,
               zipCode,
@@ -106,7 +104,7 @@ class PasswordChangeForm extends Component {
 
   //Mian 
   render() {
-    const { username, phoneNo, lastName, city, state, zipCode, alpineActivities, bio,photoUrl, error, isUploading,progress } = this.state;
+    const { username, phoneNo, city, state, zipCode, alpineActivities, bio,photoUrl, error, isUploading,progress } = this.state;
     if(this.state.isInvalid) { // if your component doesn't have to wait for an async action, remove this block 
       return (
         <div style={{textAlign:"center"}}><img src="/asset/images/Loading.gif" width="140px" style={{paddingTop:"180px"}}/></div>
@@ -121,13 +119,13 @@ class PasswordChangeForm extends Component {
           <img src={photoUrl} alt="Logo" width="150px"/>
           </div>
           <form onSubmit={this.onSubmit}>
-          <div class="file-field input-field">
-            <div class="btn blue darken-1">
+          <div className="file-field input-field">
+            <div className="btn blue darken-1">
               <span>Change Profile Picture</span>
               <input type="file" onChange={ (e) => this.handleChange(e.target.files) } />
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" />
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" />
             </div>
           </div>
             <label className="custom_input_label pure-material-textfield-outlined">
@@ -140,17 +138,6 @@ class PasswordChangeForm extends Component {
                 className="custom_input_field pure-material-textfield-outlined" 
                 />
               <span className="field_span">Name</span>
-            </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input 
-                name="lastName"
-                value={lastName}
-                onChange={this.onChange}
-                type="text" 
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined" 
-                />
-              <span className="field_span">Last Name</span>
             </label>
             <label className="custom_input_label pure-material-textfield-outlined">
               <input 
