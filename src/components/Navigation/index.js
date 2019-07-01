@@ -21,40 +21,62 @@ const Navigation = () => (
 
 //if user loggin it see these links
 const NavigationAuth = ({ authUser }) => (
-  <nav className="nav-wrapper blue darken-2">
-    <div className="container">
-        <div className="brand-logo">Alpine.<span style={{color: 'red'}}>red</span></div>
-        <ul className="right hide-on-med-and-down">
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.HOME}>Home</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
-      </li>
-      {authUser.roles.includes(ROLES.ADMIN) && (
+  <div>
+    <nav className="nav-wrapper blue darken-2">
+      <div className="container">
+          <div className="brand-logo">Alpine.<span style={{color: 'red'}}>red</span></div>
+          <ul className="right hide-on-med-and-down">
+            <li>
+              <Link to={ROUTES.LANDING}>Landing</Link>
+            </li>
+            <li>
+              <Link to={ROUTES.HOME}>Home</Link>
+            </li>
+            <li>
+              <Link to={ROUTES.ACCOUNT}>Account</Link>
+            </li>
+            {authUser.roles.includes(ROLES.ADMIN) && (
+              <li>
+                <Link to={ROUTES.ADMIN}>Admin</Link>
+              </li>
+            )}
+            <li>
+              <SignOutButton />
+            </li>
+          </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
         <li>
-          <Link to={ROUTES.ADMIN}>Admin</Link>
+          <Link to={ROUTES.LANDING}>Landing</Link>
         </li>
-      )}
-      <li>
-        <SignOutButton />
-      </li>
+        <li>
+          <Link to={ROUTES.HOME}>Home</Link>
+        </li>
+        <li>
+          <Link to={ROUTES.ACCOUNT}>Account</Link>
+        </li>
+        {authUser.roles.includes(ROLES.ADMIN) && (
+          <li>
+            <Link to={ROUTES.ADMIN}>Admin</Link>
+          </li>
+        )}
+        <li>
+          <SignOutButton />
+        </li>
     </ul>
-    </div>
-  </nav>
- 
+  </div>
 );
 //if user not loggin or by default see these links
 const NavigationNonAuth = () => (
-  <nav className="nav-wrapper blue darken-2">
-    <div className="container">
-        <div className="brand-logo">Alpine.<span style={{color: 'red'}}>red</span></div>
-        <SignOutLinks></SignOutLinks>
-    </div>
-  </nav>
+  <div>
+    <nav className="nav-wrapper blue darken-2">
+      <div className="container">
+          <div className="brand-logo">Alpine.<span style={{color: 'red'}}>red</span></div>
+          <SignOutLinks></SignOutLinks>
+      </div>
+    </nav>
+  </div>
 );
 
 export default Navigation;

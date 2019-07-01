@@ -205,7 +205,7 @@ class PasswordChangeForm extends Component {
               />
               <span className="field_span font-Bitter">Bio</span>
             </label>
-            <button type="submit" className="btn btn-block blue darken-1"  disabled={this.state.isInvalid}> Update Profile</button>
+            <button type="submit" className=""  disabled={this.state.isInvalid}> Update Profile</button>
             {error && <p>{error.message}</p>}
           </form>			
         </div>

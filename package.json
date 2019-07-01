@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.5.8",
+    "materialize-css": "^1.0.0-rc.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-modal": "^3.8.1",
