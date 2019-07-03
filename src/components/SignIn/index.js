@@ -6,18 +6,37 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import MButton from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
-let signInBtnDesign={
-  marginRight: '10px'
-};
-const SignInPage = () => (
-  <div>
-    <h4 className="t_center signup_h4">SignIn</h4>
-    <p>Please sign in</p>
-    <SignInForm />
-    <div className="or d_center">
-        <h6 className="text-center or_div">OR Sign in With</h6>
-    </div>
+//Custom Styling
+const Styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  dense: {
+    marginTop: theme.spacing(2),
+  },
+  notchedOutline: {
+    borderColor: "#2196f3 !important"
+  }
+});
+const SignInPage = ( props) => (
+  <div className="container">
+    <h2 className="login-title">Sign In</h2>
+    <SignInForm props={props}/>
+    <br />
+    <h2 className="horizontal-line-with-words"><span className="word-span-horizontal-line">or</span></h2>
     <SignInAll />      
   </div>
 );
@@ -33,6 +52,7 @@ class SignInFormBase extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+    console.log(props)
   }
 
   onSubmit = event => {
@@ -62,180 +82,49 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <label className="custom_input_label pure-material-textfield-outlined">
-          <input
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="text"
-            placeholder=""
-            className="custom_input_field pure-material-textfield-outlined"
-          />
-          <span className="field_span font-Bitter">Email</span>
-        </label>
-        <label className="custom_input_label pure-material-textfield-outlined">
-          <input
+        <TextField
+                required
+                id="outlined-required"
+                label="Email"
+                placeholder="email..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.props.classes.notchedOutline
+                  }
+                }} />
+          <TextField 
+            required
+            id="outlined-required"
+            label="Password"
+            placeholder="password..."
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            type="password"
             name="password"
             value={password}
             onChange={this.onChange}
-            type="password"
-            placeholder=""
-            className="custom_input_field pure-material-textfield-outlined"
-          />
-          <span className="field_span font-Bitter">Password</span>
-        </label>
-        <button disabled={isInvalid} type="submit" className="btn waves-effect waves-light singup_button_custome font-Bitter">
+            InputProps={{
+              classes: {
+                notchedOutline: this.props.props.classes.notchedOutline
+              }
+            }} />
+        <MButton type="submit" variant="contained" color="primary">
           Sign In
-        </button>
+        </MButton>
 
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
-
-class SignInGoogleBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithGoogle()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        this.props.firebase
-          .user(socialAuthUser.user.uid)
-          .set({
-            username: socialAuthUser.user.displayName,
-            email: socialAuthUser.user.email,
-            roles: [],
-          })
-          .then(() => {
-            this.setState({ error: null });
-            this.props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
-
-class SignInFacebookBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithFacebook()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        this.props.firebase
-          .user(socialAuthUser.user.uid)
-          .set({
-            username: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email,
-            roles: [],
-          })
-          .then(() => {
-            this.setState({ error: null });
-            this.props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
-
-class SignInTwitterBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithTwitter()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        this.props.firebase
-          .user(socialAuthUser.user.uid)
-          .set({
-            username: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email,
-            roles: [],
-          })
-          .then(() => {
-            this.setState({ error: null });
-            this.props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-  submittTwitter = () => {
-    alert('Twitter');
-  }
-  submittFB = () => {
-    alert('FB');
-  }
-  submittGoogle = () => {
-    alert('Google');
-  }
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
         {error && <p>{error.message}</p>}
       </form>
     );
@@ -385,13 +274,41 @@ class SignInTwitterGoogleFBBase extends Component {
     const { error } = this.state;
     return (
       <div>
-        <div className="w-50 social py-4">
-				<div className="social_links justify-content-around d-flex">
-					<i className="fab fa-facebook-square" onClick={this.submittFB} style={signInBtnDesign}></i>
-					<i className="fab fa-google-plus-square" onClick={this.submittGoogle} style={signInBtnDesign}></i>
-					<i className="fab fa-twitter-square" onClick={this.submittTwitter} ></i>
-				</div>
-			</div>
+        <div className="social-icon-box center-align">
+          <div className="margin-right">
+            <Fab 
+              color="primary" 
+              aria-label="Add" 
+              onClick={this.submittFB}
+              style={{
+                borderRadius:'10px',
+              }}>
+            <i className="fa fa-facebook font-size-30"></i>
+            </Fab>
+          </div>
+          <div className="margin-right">
+            <Fab 
+              aria-label="Add" 
+              onClick={this.submittGoogle}
+              style={{
+                backgroundColor: "#DC4E41",
+                borderRadius:'10px',
+              }}>
+              <i className="fa fa-google-plus font-size-30"></i>
+            </Fab>
+          </div>
+          <div className="margin-right">
+            <Fab 
+              aria-label="Add"
+              onClick={this.submittTwitter}
+              style={{
+                backgroundColor: "#33AAF3",
+                borderRadius:'10px',
+              }}>
+              <i className="fa fa-twitter font-size-30"></i>
+            </Fab>
+          </div>
+       	</div>
         {error && <p>{error.message}</p>}
       </div>
     );
@@ -403,26 +320,17 @@ const SignInForm = compose(
   withFirebase,
 )(SignInFormBase);
 
-const SignInGoogle = compose(
-  withRouter,
-  withFirebase,
-)(SignInGoogleBase);
-
-const SignInFacebook = compose(
-  withRouter,
-  withFirebase,
-)(SignInFacebookBase);
-
-const SignInTwitter = compose(
-  withRouter,
-  withFirebase,
-)(SignInTwitterBase);
-
 const SignInAll = compose(
   withRouter,
   withFirebase,
 )(SignInTwitterGoogleFBBase);
 
-export default SignInPage;
+SignInPage.propTypes = {
+  label: PropTypes.string,
+  fieldProps: PropTypes.object,
+  classes: PropTypes.object.isRequired
+}
 
-export { SignInForm, SignInGoogle, SignInFacebook, SignInTwitter };
+export default withStyles(Styles)(SignInPage);
+
+export { SignInForm,  SignInAll };

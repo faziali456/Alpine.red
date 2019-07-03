@@ -9,7 +9,7 @@ let styles = {
   }
 
 const Landing = () => (
-  <div style={styles}>
+  <div >
   </div>
 );
 

@@ -3,9 +3,11 @@ import SignUpForm from '../../SignUp';
 import SignInForm from '../../SignIn';
 import { SignUpLink } from '../../SignUp';
 import Modal from 'react-modal';
+
 let closeBtn={
     float: 'right'
 };
+
 class SignInLink extends React.Component{
 
     constructor () {
@@ -40,6 +42,7 @@ class SignInLink extends React.Component{
             showSignUpModal: true
          });
     }
+    
     render(){
         return (
             <div>
@@ -47,6 +50,7 @@ class SignInLink extends React.Component{
                     <li><button onClick={this.handleLogin} className="btn btn-dafault">Sign In</button></li>
                     <li><button onClick={this.registerHandler} className="btn btn-default">Sign Up</button></li>
                 </ul>
+
                 <Modal
                 isOpen={this.state.showSignUpModal}
                 contentLabel="Sign Up"

@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { AuthUserContext, withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import MButton from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+
 //Init State
 const INITIAL_STATE = {
   username: '',
@@ -17,18 +27,48 @@ const INITIAL_STATE = {
   loading: false
 };
 
+//Custom Styling
+const Styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  dense: {
+    marginTop: theme.spacing(2),
+  },
+  notchedOutline: {
+    borderColor: "#2196f3 !important"
+  }
+});
+
+const setOpen={
+  open:false
+};
+
 class PasswordChangeForm extends Component {
   //Init State with user profile
   constructor(props) {
     super(props);
-    
     this.state ={
-      INITIAL_STATE
+      INITIAL_STATE,
+      openDiaolog: false
     }
     this.FileList=null;
     this.getSetData();
+    console.log(props);
+}
+  
+  handleClickOpen =() => {
+    
   }
 
+  handleClose = () => {
+    
+  }
   //Init Field
   getSetData = () => {
     this.props.firebase
@@ -60,14 +100,18 @@ class PasswordChangeForm extends Component {
     }).then(() => {
       // this.setState({ 
       //   ...INITIAL_STATE, });
-      alert('Profile Updated');
-      this.setState({ isInvalid: false });
+      this.setState({ isInvalid: false, });
+      alert("profile updated");
     })
     .catch(error => {
       this.setState({ error });
     });
     event.preventDefault();
   };
+
+  onFileButtonClick = (inputValue) => {
+    document.getElementById("fileInput").click()
+  }
 
   //change listener on every fields 
   onChange = event => {
@@ -114,104 +158,181 @@ class PasswordChangeForm extends Component {
     return (
       <div className="container justify-content-center d-flex">
         <div className="signup_form border p-3 mt-5">
-          <h4 className="t_center" style={{ color: '#16ABE4'}}>Update Profile</h4> 
+          <h2 className="login-title">Update Profile</h2>
           <div style={{textAlign: 'center'}}>
           <img src={photoUrl} alt="Logo" width="150px"/>
           </div>
           <form onSubmit={this.onSubmit}>
-          <div className="file-field input-field">
-            <div className="btn blue darken-1">
-              <span>Change Profile Picture</span>
-              <input type="file" onChange={ (e) => this.handleChange(e.target.files) } />
-            </div>
-            <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" />
-            </div>
-          </div>
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input 
+          <input type="file" id="fileInput" onChange={ (e) => this.handleChange(e.target.files) } style={{display:"none"}}/>
+          <MButton 
+            variant="contained" 
+            color="default" 
+            onClick={(event) => this.onFileButtonClick(event)}>
+            Upload
+            <CloudUploadIcon />
+          </MButton>
+          <TextField 
                 name="username"
                 value={username}
                 onChange={this.onChange}
                 type="text" 
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined" 
+                label="Username"
+                placeholder="username..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
                 />
-              <span className="field_span">Name</span>
-            </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input 
+              <TextField 
                 name="phoneNo"
                 value={phoneNo}
                 onChange={this.onChange}
                 type="Number" 
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined" 
-                />
-              <span className="field_span">Phone</span>
-            </label>            
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input
+                label="Phone No"
+                placeholder="phone no..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
+                />      
+              <TextField
                 name="city"
                 value={city}
                 onChange={this.onChange}
                 type="text"
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined"
+                label="City"
+                placeholder="city..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
               />
-              <span className="field_span font-Bitter">City</span>
-            </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input
+            <TextField
                 name="state"
                 value={state}
                 onChange={this.onChange}
                 type="text"
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined"
+                label="State"
+                placeholder="state..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
               />
-              <span className="field_span font-Bitter">State</span>
-            </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input
+             <TextField
                 name="zipCode"
                 value={zipCode}
                 onChange={this.onChange}
-                type="text"
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined"
+                type="number"
+                label="Zip Code"
+                placeholder="zipcode..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
               />
-              <span className="field_span font-Bitter">Zip Code</span>
-            </label>
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input
+              <TextField
                 name="alpineActivities"
                 value={alpineActivities}
                 onChange={this.onChange}
                 type="text"
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined"
+                label="Alpine Activities"
+                placeholder="alpine activities..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
               />
-              <span className="field_span font-Bitter">Interesting Alpine Activities</span>
-            </label>                       
-            <label className="custom_input_label pure-material-textfield-outlined">
-              <input
+              <TextField
                 name="bio"
                 value={bio}
                 onChange={this.onChange}
                 type="text"
-                placeholder=""
-                className="custom_input_field pure-material-textfield-outlined"
+                label="Bio"
+                placeholder="bio..."
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: this.props.classes.notchedOutline
+                  }
+                }}
               />
-              <span className="field_span font-Bitter">Bio</span>
-            </label>
-            <button type="submit" className="btn btn-block blue darken-1"  disabled={this.state.isInvalid}> Update Profile</button>
+            <MButton type="submit" variant="contained" color="primary">
+            Save changes
+          </MButton>
             {error && <p>{error.message}</p>}
           </form>			
         </div>
+        <Dialog
+        open={false}
+        keepMounted
+        onClose={this.handleClose()}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">{"Confirmation Dialoge"}</DialogTitle>          
+          <DialogActions>
+            <MButton onClick={this.handleClose()} color="primary">
+              Close
+            </MButton>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
 }
 
-export default withFirebase(PasswordChangeForm);
+PasswordChangeForm.propTypes = {
+  label: PropTypes.string,
+  fieldProps: PropTypes.object,
+  classes: PropTypes.object.isRequired
+}
+
+export default withFirebase(withStyles(Styles)(PasswordChangeForm));
