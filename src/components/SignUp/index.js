@@ -204,6 +204,7 @@ function SignUpFormBase(props) {
 //Sign Up Page for Routing
 const SignUpPage = () => (
     <div>
+      <br />
         <h2 className="login-title">SignUp</h2>
         <SignInAll />
         <SignUpForm />

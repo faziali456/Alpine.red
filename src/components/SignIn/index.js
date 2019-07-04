@@ -33,10 +33,9 @@ const Styles = theme => ({
 });
 const SignInPage = ( props) => (
   <div className="container">
+    <br />
     <h2 className="login-title">Sign In</h2>
     <SignInForm props={props}/>
-    <br />
-    <h2 className="horizontal-line-with-words"><span className="word-span-horizontal-line">or</span></h2>
     <SignInAll />      
   </div>
 );
@@ -81,7 +80,7 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={{margin: '0px 30px 0 30px'}}>
         <TextField
                 required
                 id="outlined-required"
@@ -126,6 +125,8 @@ class SignInFormBase extends Component {
         </MButton>
 
         {error && <p>{error.message}</p>}
+        <br />
+        <h2 className="horizontal-line-with-words"><span className="word-span-horizontal-line">or</span></h2>
       </form>
     );
   }

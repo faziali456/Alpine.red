@@ -1,5 +1,6 @@
 ////////////////////////Import for Menu//////////////////////////////////
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -53,10 +54,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: { 
       borderRadius: 30
-     }
+     },
+     sectionDesktop: {
+      display: 'none',
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
+      },
+    },
+    sectionMobile: {
+      display: 'flex',
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+    },
+    
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: '#3399ff',
+    },
   }),
 );
-export default function ButtonAppBar() {
+function ButtonAppBar(props: any) {
   const classes = useStyles();
   const closeImg = {
       cursor:'pointer',
@@ -99,11 +119,11 @@ export default function ButtonAppBar() {
                     Account
                   </ListSubheader>
                 }>
-        <ListItem button key="Sign In">
+        <ListItem button key="Sign In" onClick={redirectToSignIn}>
           <i className="fa fa-sign-in" style={{fontSize : 'larger', marginLeft: '10px'}}></i>
           <ListItemText primary="Sign In" />
         </ListItem>
-        <ListItem button key="Sign In">
+        <ListItem button key="Sign In" onClick={redirectToSignUp}>
           <i className="fa fa-plus-square" style={{fontSize : 'larger', marginLeft: '10px'}}></i>
           <ListItemText primary="Sign Up" />
         </ListItem>
@@ -123,16 +143,36 @@ export default function ButtonAppBar() {
   ) => {
     setOpenSIDialog(open);
   }
+  function redirectToSignUp(){
+    props.history.push('/signup');
+  }
+
+  function redirectToSignIn(){
+    props.history.push('/signin');
+  }
+
   //render top nav bar
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="Show more"
+                aria-haspopup="true"
+                onClick={toggleDrawer(true)}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+            </div>
           <Typography variant="h6" className={classes.title}>
             Alpine<span style={{color:'red'}}>.red</span>
           </Typography>
-          <Button color="inherit" onClick={toggleDialog(true)}>Sign Up</Button>
-          <Button color="inherit" onClick={toggleSIDialog(true)}>Sign In</Button>
+          <div className={classes.sectionDesktop}>
+            <Button color="inherit" onClick={toggleDialog(true)}>Sign Up</Button>
+            <Button color="inherit" onClick={toggleSIDialog(true)}>Sign In</Button>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer open={state.isOpenSidebar} onClose={toggleDrawer(false)}>
@@ -150,7 +190,10 @@ export default function ButtonAppBar() {
         }}
       >
         <DialogContent>
-          <DialogContentText>     
+          <DialogContentText>
+          <IconButton aria-label="Close" className={classes.closeButton} onClick={toggleDialog(false)}>
+            <CloseIcon />
+          </IconButton>
           <SignUpForm />      
           </DialogContentText>
         </DialogContent>
@@ -166,8 +209,12 @@ export default function ButtonAppBar() {
           paper: classes.paper 
         }}
       >
+
         <DialogContent>
-          <DialogContentText>     
+          <DialogContentText>
+          <IconButton aria-label="Close" className={classes.closeButton} onClick={toggleSIDialog(false)}>
+            <CloseIcon />
+          </IconButton>
           <SignInForm />      
           </DialogContentText>
         </DialogContent>
@@ -175,3 +222,5 @@ export default function ButtonAppBar() {
     </div>
   );
 }
+
+export default withRouter(ButtonAppBar);
