@@ -72,6 +72,7 @@ function SignUpFormBase(props) {
             phoneNo,
             email,
             roles,
+            Loginprovider: 'classic'
           })
           .then(() => {
             setValues({ ...INITIAL_STATE });

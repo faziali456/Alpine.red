@@ -51,7 +51,6 @@ class SignInFormBase extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
-    console.log(props)
   }
 
   onSubmit = event => {
@@ -158,6 +157,7 @@ class SignInTwitterGoogleFBBase extends Component {
 
   addUser = (socialAuthUser, provider) => {
     console.log(socialAuthUser.user.uid + "----------------User Not Exist------------------------");
+    //Twitter
     if(provider===1){
       this.props.firebase
         .user(socialAuthUser.user.uid)
@@ -173,6 +173,7 @@ class SignInTwitterGoogleFBBase extends Component {
           alpineActivities: '',
           bio: '',
           roles: [],
+          Loginprovider: 'twitter'
         })
         .then(() => {
           this.setState({ error: null });
@@ -183,6 +184,7 @@ class SignInTwitterGoogleFBBase extends Component {
           this.setState({ error });
         });
     }
+    //Facebook
     else if(provider===2){
       this.props.firebase
           .user(socialAuthUser.user.uid)
@@ -197,7 +199,8 @@ class SignInTwitterGoogleFBBase extends Component {
             zipCode: '',
             alpineActivities: '',
             bio: '',
-            roles: [], 
+            roles: [],
+            Loginprovider: 'facebook' 
           })          
         .then(() => {
         this.setState({ error: null });
@@ -207,6 +210,7 @@ class SignInTwitterGoogleFBBase extends Component {
             console.log("User Creation Eror "+error);           
           });
     }
+    //Google
     else if(provider===3){
       this.props.firebase
           .user(socialAuthUser.user.uid)
@@ -222,6 +226,7 @@ class SignInTwitterGoogleFBBase extends Component {
             alpineActivities: '',
             bio: '',
             roles: [],
+            Loginprovider: 'google'
           })
           .then(() => {
             this.setState({ error: null });
