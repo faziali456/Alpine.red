@@ -10,6 +10,7 @@ import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
+import Icon from '@material-ui/core/Icon';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -217,15 +218,15 @@ function PrimarySearchAppBar(props: any) {
       <List 
           subheader={
                   <ListSubheader component="div" id="nested-list-subheader">
-                    Pages
+                    Browse
                   </ListSubheader>
                 }>
-        <ListItem button key="Home" onClick={redirectToHome}>
-          <i className="fa fa-home" style={{fontSize : 'larger', marginLeft: '10px'}}></i>
+        <ListItem button key="home" onClick={redirectToHome}>
+          <ListItemIcon>{2 % 2 === 0 ? <Icon>home </Icon> : <MenuIcon />}</ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
         <ListItem button key="Pages" onClick={redirectToPage}>
-          <i className="fa fa-plus-square" style={{fontSize : 'larger', marginLeft: '10px'}}></i>
+          <ListItemIcon>{2 % 2 === 0 ? <Icon>horizontal_split </Icon> : <MenuIcon />}</ListItemIcon>
           <ListItemText primary="Pages" />
         </ListItem>
       </List >

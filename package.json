@@ -10,6 +10,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.4",
     "clsx": "^1.0.4",
+    "fg-loadcss": "^2.1.0",
     "firebase": "^5.5.8",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",

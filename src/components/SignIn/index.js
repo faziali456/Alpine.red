@@ -35,8 +35,8 @@ const SignInPage = ( props) => (
   <div className="container">
     <br />
     <h2 className="login-title">Sign In</h2>
+    <SignInAll /> 
     <SignInForm props={props}/>
-    <SignInAll />      
   </div>
 );
 
@@ -80,6 +80,7 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit} style={{margin: '0px 30px 0 30px'}}>
+        <h2 className="horizontal-line-with-words"><span className="word-span-horizontal-line">or</span></h2>
         <TextField
                 required
                 id="outlined-required"
@@ -124,8 +125,6 @@ class SignInFormBase extends Component {
         </MButton>
 
         {error && <p>{error.message}</p>}
-        <br />
-        <h2 className="horizontal-line-with-words"><span className="word-span-horizontal-line">or</span></h2>
       </form>
     );
   }

@@ -32,16 +32,8 @@ const Component = () => {
   const { height, width } = useWindowDimensions();
 
   return (
-    <div style={{ 
-      backgroundImage: `url(${ imgUrl })`,
-      backgroundRepeat  : 'no-repeat',
-      backgroundPosition: 'center center',
-      backgroundSize: 'cover',
-      backgroungAttachment: 'fixed',
-      backgroungColor: '#999',
-      top: "64px",
-      padding: `0 0 ${height-70}px 0`,
-      }}>
+    <div>
+         <img className="responsive-image" src='/asset/images/BgImage.jpg'></img>
     </div>
   );
 };

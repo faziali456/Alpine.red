@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 /////////////////////////////Import for Side Bar////////////////////////
@@ -119,12 +120,12 @@ function ButtonAppBar(props: any) {
                     Account
                   </ListSubheader>
                 }>
-        <ListItem button key="Sign In" onClick={redirectToSignIn}>
-          <i className="fa fa-sign-in" style={{fontSize : 'larger', marginLeft: '10px'}}></i>
-          <ListItemText primary="Sign In" />
+        <ListItem button key="SignIn" onClick={redirectToSignIn}>
+            <ListItemIcon>{2 % 2 === 0 ? <Icon>https </Icon> : <MenuIcon />}</ListItemIcon>
+            <ListItemText primary="Sign In" />
         </ListItem>
-        <ListItem button key="Sign In" onClick={redirectToSignUp}>
-          <i className="fa fa-plus-square" style={{fontSize : 'larger', marginLeft: '10px'}}></i>
+        <ListItem button key="SignUp" onClick={redirectToSignUp}>
+          <ListItemIcon>{2 % 2 === 0 ? <Icon>how_to_reg </Icon> : <MenuIcon />}</ListItemIcon>
           <ListItemText primary="Sign Up" />
         </ListItem>
       </List >
