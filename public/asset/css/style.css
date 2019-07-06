@@ -29,7 +29,7 @@
   .margin-right{
       margin-right: 10px
   }
-  .responsive-image {
+  .responsive-image >div >img{
     width: 100%;
     height: auto;
   }

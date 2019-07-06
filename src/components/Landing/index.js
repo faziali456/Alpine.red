@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { ResponsiveImage, ResponsiveImageSize } from 'react-responsive-image';
 
 let imgUrl = '/asset/images/BgImage.jpg'
 
@@ -31,9 +32,23 @@ function useWindowDimensions() {
 const Component = () => {
   const { height, width } = useWindowDimensions();
 
-  return (
+  return ( 
     <div>
-         <img className="responsive-image" src='/asset/images/BgImage.jpg'></img>
+      <ResponsiveImage className="responsive-image">
+        <ResponsiveImageSize
+          default
+          minWidth={0}
+          path={'/asset/images/Mobile.jpg'}
+        />
+        <ResponsiveImageSize
+          minWidth={768}
+          path={'/asset/images/Mobile.jpg'}
+        />
+        <ResponsiveImageSize
+          minWidth={1100}
+          path={'/asset/images/Desktop.jpg'}
+        />
+    </ResponsiveImage>
     </div>
   );
 };

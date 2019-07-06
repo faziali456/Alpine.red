@@ -130,6 +130,17 @@ function ButtonAppBar(props: any) {
         </ListItem>
       </List >
       <Divider />
+      <List 
+      subheader={
+                  <ListSubheader component="div" id="nested-list-subheader">
+                    Pages
+                  </ListSubheader>
+                }>
+                   <ListItem button key="Home" onClick={redirectToHome}>
+          <ListItemIcon>{2 % 2 === 0 ? <Icon>home </Icon> : <MenuIcon />}</ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+                </List>
     </div>
   );
   
@@ -152,6 +163,9 @@ function ButtonAppBar(props: any) {
     props.history.push('/signin');
   }
 
+  function redirectToHome(){
+    props.history.push('/');
+  }
   //render top nav bar
   return (
     <div className={classes.root}>
