@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>90872769905-uu1sqd1ci9kkkpihti97oiiq3m88340a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.90872769905-uu1sqd1ci9kkkpihti97oiiq3m88340a</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>90872769905-d5q0diari1i1b3i4mn944fv0t8ml11j0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD54X6-muZ4F8-lQjevy75YvheaQEtmL5Y</string>
+	<key>GCM_SENDER_ID</key>
+	<string>90872769905</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.assorttech.firebaseDemo2</string>
+	<key>PROJECT_ID</key>
+	<string>alpine-red</string>
+	<key>STORAGE_BUCKET</key>
+	<string>alpine-red.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:90872769905:ios:53a5b5d354c38880</string>
+	<key>DATABASE_URL</key>
+	<string>https://alpine-red.firebaseio.com</string>
+</dict>
+</plist>

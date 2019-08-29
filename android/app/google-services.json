@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "90872769905",
+    "firebase_url": "https://alpine-red.firebaseio.com",
+    "project_id": "alpine-red",
+    "storage_bucket": "alpine-red.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90872769905:android:f0ace462d4899e89",
+        "android_client_info": {
+          "package_name": "com.assorttech.firebase_demo2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90872769905-ic5gogt2ppesejhajp9vii7m3chqvska.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.assorttech.firebase_demo2",
+            "certificate_hash": "21e268540ac2e80c7918fa4d7b1b75f1f4bf7e16"
+          }
+        },
+        {
+          "client_id": "90872769905-gg1jetf5afo1ugqknav77q47ef7382qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.assorttech.firebase_demo2",
+            "certificate_hash": "d3d661dad40d9052ba0821379448e5e58ddb52dc"
+          }
+        },
+        {
+          "client_id": "90872769905-ga9rnn3q0400sjl8dt6s3ri3aree1133.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVEKLpRQQ5xdTBYwNR2bGWxM6rH4ELMQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90872769905-ga9rnn3q0400sjl8dt6s3ri3aree1133.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90872769905-uu1sqd1ci9kkkpihti97oiiq3m88340a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.assorttech.firebaseDemo2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
